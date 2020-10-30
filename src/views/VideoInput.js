@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Webcam from 'react-webcam';
-import { loadModels, getFullFaceDescription } from '../api/face';
+import { loadModels, getFullFaceDescription, createMatcher } from '../api/face';
 
 // Import face profile
-//const JSON_PROFILE = require('../descriptors/bnk48.json');
+const JSON_PROFILE = require('../descriptors/bnk48.json');
 
 const WIDTH = 420;
 const HEIGHT = 420;
@@ -26,7 +26,7 @@ class VideoInput extends Component {
 
   componentWillMount = async () => {
     await loadModels();
-    //this.setState({ faceMatcher: await createMatcher(JSON_PROFILE) });
+    this.setState({ faceMatcher: await createMatcher(JSON_PROFILE) });
     this.setInputDevice();
   };
 
