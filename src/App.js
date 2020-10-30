@@ -17,7 +17,7 @@ class App extends Component {
         <Router history={history}>
           <div className="route">
             <Header />
-            <Route exact path="/camera" component={CameraFaceDetect} />
+            <Route exact path="/camera" component={VideoInput} />
           </div>
         </Router>
       </div>
