@@ -1,6 +1,7 @@
 import * as faceapi from 'face-api.js';
 
-// Load models and weights
+const maxDescriptorDistance = 0.5;
+
 export async function loadModels() {
   const MODEL_URL = process.env.PUBLIC_URL + '/models';
   await faceapi.loadTinyFaceDetectorModel(MODEL_URL);
@@ -29,9 +30,8 @@ export async function getFullFaceDescription(blob, inputSize = 512) {
   return fullDesc;
 }
 
-const maxDescriptorDistance = 0.5;
 export async function createMatcher(faceProfile) {
-  Create labeled descriptors of member from profile
+  // Create labeled descriptors of member from profile
   let members = Object.keys(faceProfile);
   let labeledDescriptors = members.map(
     member =>
@@ -43,10 +43,14 @@ export async function createMatcher(faceProfile) {
       )
   );
 
-   Create face matcher (maximum descriptor distance is 0.5)
+  // Create face matcher (maximum descriptor distance is 0.5)
   let faceMatcher = new faceapi.FaceMatcher(
     labeledDescriptors,
     maxDescriptorDistance
   );
   return faceMatcher;
+}
+
+export function isFaceDetectionModelLoaded() {
+  return !!faceapi.nets.tinyFaceDetector.params;
 }
